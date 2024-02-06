@@ -8,21 +8,21 @@
               <h1 class="text-center">Login</h1>
             </v-card-title>
             <v-card-text>
-              <v-form @submit.prevent="save">
+              <v-form @submit.prevent="send">
                 <v-text-field
-                  v-model="form.name"
-                  label="Name"
+                  v-model="email"
+                  label="email"
                   outlined
                   class="my-2"
                 ></v-text-field>
                 <v-text-field
-                  v-model="form.password"
+                  v-model="password"
                   label="Password"
                   type="password"
                   outlined
                   class="my-2"
                 ></v-text-field>
-                <v-btn type="submit" color="success" @click="save">Save</v-btn>
+                <v-btn type="submit" color="success" @click="send">Save</v-btn>
               </v-form>
             </v-card-text>
           </v-card>
@@ -32,30 +32,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import { RT_ADMIN } from "@/constants/admin";
+<script setup lang="ts">
 import { ref } from "vue";
-import { useRoute } from "vue-router";
-import { useToast } from "vue-toastification";
-const toast = useToast();
-export default {
-  name: "Login",
-  data() {
-    return {
-      form: {
-        name: "",
-        password: "",
-      },
-    };
-  },
-  methods: {
-    async save() {
-      if (this.form.name === "admin" && this.form.password === "123") {
-        await this.$router.push({ name: RT_ADMIN });
-      } else {
-        toast.warning("Error");
-      }
-    },
-  },
+import { useAuthStore } from "../store/auth";
+
+const store = useAuthStore();
+
+const email = ref("");
+const password = ref("");
+
+const send = async () => {
+  let payload = { email: email.value, password: password.value };
+  await store.authLogin(payload);
 };
 </script>
+
+<style lang="scss" scoped></style>

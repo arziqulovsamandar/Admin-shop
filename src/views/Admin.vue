@@ -1,5 +1,5 @@
 <template>
-  <h1>Admin pages</h1>
+  <h1>Admin </h1>
   <!-- <v-col v-if="loading" aligin="center">
     <v-progress-circular indeterminate color="priamry"></v-progress-circular>
   </v-col>
@@ -67,79 +67,79 @@
   </v-col> -->
 </template>
 
-<script lang="ts">
-import axios from "axios";
-import { useToast } from "vue-toastification";
-const toast = useToast();
-export default {
-  name: "AdminPage",
-  data() {
-    return {
-      texte: [],
-      users: [],
-      loading: false,
-      form: {
-        soz: "",
-        role: "Admin",
-      },
-      text: [{ soz: " " }],
-      showSmallDialog: false,
-      snackbar: false,
-    };
-  },
-  mounted: async function () {
-    this.loading = true;
-    const response = await fetch("http://localhost:4000/api/user");
-    if (response.ok) {
-      this.users = await response.json();
-    } else {
-      console.error(`Serverdan xato: ${response.status}`);
-    }
-    this.loading = false;
-    const response1 = await fetch("http://localhost:4000/api/send");
-    if (response.ok) {
-      this.texte = await response1.json();
-    } else {
-      console.error(`Serverdan xato: ${response1.status}`);
-    }
-  },
-  methods: {
-    send() {
-      if (!this.form.soz) {
-        toast.warning("Data error");
-      } else {
-        fetch("http://localhost:4000/api/send", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ soz: this.form.soz, role: this.form.role }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              console.error(`Server error: ${response.status}`);
-            }
-            this.form.soz = "";
-          })
-          .catch((error) => {
-            console.error("Error sending data to the server:", error);
-          });
-        window.location.reload();
-      }
-    },
-    async onClick() {
-      fetch("http://localhost:4000/api/send", {
-        method: "DELETE",
-      });
-      window.location.reload();
-      this.snackbar = false;
-    },
-    toggleSmallDialog() {
-      this.showSmallDialog = !this.showSmallDialog;
-    },
-    closeSmallDialog() {
-      this.showSmallDialog = false;
-    },
-  },
-};
+<script setup lang="ts">
+// import axios from "axios";
+// import { useToast } from "vue-toastification";
+// const toast = useToast();
+// export default {
+//   name: "AdminPage",
+//   data() {
+//     return {
+//       texte: [],
+//       users: [],
+//       loading: false,
+//       form: {
+//         soz: "",
+//         role: "Admin",
+//       },
+//       text: [{ soz: " " }],
+//       showSmallDialog: false,
+//       snackbar: false,
+//     };
+//   },
+//   mounted: async function () {
+//     this.loading = true;
+//     const response = await fetch("http://localhost:4000/api/user");
+//     if (response.ok) {
+//       this.users = await response.json();
+//     } else {
+//       console.error(`Serverdan xato: ${response.status}`);
+//     }
+//     this.loading = false;
+//     const response1 = await fetch("http://localhost:4000/api/send");
+//     if (response.ok) {
+//       this.texte = await response1.json();
+//     } else {
+//       console.error(`Serverdan xato: ${response1.status}`);
+//     }
+//   },
+//   methods: {
+//     send() {
+//       if (!this.form.soz) {
+//         toast.warning("Data error");
+//       } else {
+//         fetch("http://localhost:4000/api/send", {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({ soz: this.form.soz, role: this.form.role }),
+//         })
+//           .then((response) => {
+//             if (!response.ok) {
+//               console.error(`Server error: ${response.status}`);
+//             }
+//             this.form.soz = "";
+//           })
+//           .catch((error) => {
+//             console.error("Error sending data to the server:", error);
+//           });
+//         window.location.reload();
+//       }
+//     },
+//     async onClick() {
+//       fetch("http://localhost:4000/api/send", {
+//         method: "DELETE",
+//       });
+//       window.location.reload();
+//       this.snackbar = false;
+//     },
+//     toggleSmallDialog() {
+//       this.showSmallDialog = !this.showSmallDialog;
+//     },
+//     closeSmallDialog() {
+//       this.showSmallDialog = false;
+//     },
+//   },
+// };
 </script>

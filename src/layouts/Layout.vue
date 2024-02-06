@@ -1,20 +1,20 @@
 <template>
-  <div class="w-full flex h-screen">
-    <TheSidebar />
-    <div class="w-screen flex flex-col main">
+  <div>
+    <TheHeader class="header"/>
+    <div class="home1">
+      <TheSidebar />
       <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import TheHeader from "@/components/theHeader.vue";
 import TheSidebar from "@/components/theSidebar.vue";
 </script>
 
 <style scoped>
-.main {
-  width: calc(100% - 223px);
+.home1 {
   display: flex;
-  flex-direction: column;
 }
 </style>
