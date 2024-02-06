@@ -1,0 +1,13 @@
+{
+  "admin": {
+    "addCourse": "Add new product",
+    "product": "Product",
+    "categories": "Categories",
+    "order": "Order",
+    "discount": "Discount",
+    "media": "Media",
+    "store": "Store",
+    "cupon_code": "Cupon code",
+    "customer": "Customer"
+  }
+}

@@ -3,28 +3,47 @@
     <nav>
       <ul>
         <router-link to="/products" class="nav-link">
-          <li>Product</li></router-link
+          <li>{{ t("admin.product") }}</li></router-link
         >
 
         <router-link to="/categories" class="nav-link">
-          <li>Categories</li></router-link
+          <li>{{ t("admin.categories") }}</li></router-link
         >
 
-        <router-link to="/order" class="nav-link"><li>Order</li></router-link>
-        <router-link to="/blog" class="nav-link"><li>Blog</li></router-link>
+        <router-link to="/order" class="nav-link"
+          ><li>{{ t("admin.order") }}</li></router-link
+        >
+        <router-link to="/discount" class="nav-link"
+          ><li>{{ t("admin.discount") }}</li></router-link
+        >
+        <router-link to="/media" class="nav-link"
+          ><li>{{ t("admin.media") }}</li></router-link
+        >
+        <router-link to="/store" class="nav-link"
+          ><li>{{ t("admin.store") }}</li></router-link
+        >
+        <router-link to="/cupon_code" class="nav-link"
+          ><li>{{ t("cupon_code") }}</li></router-link
+        >
+        <router-link to="/customer" class="nav-link"
+          ><li>{{ t("admin.customer") }}</li></router-link
+        >
       </ul>
     </nav>
   </aside>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+</script>
 
 <style scoped>
 aside {
-  background-color: #9ea1a1;
+  background-color: rgb(234, 236, 173);
   color: #ffffff;
   padding: 10px;
-  width: 250px;
+  width: 220px;
   height: 100vh;
 }
 .nav-link {

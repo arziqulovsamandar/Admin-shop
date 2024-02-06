@@ -1,0 +1,13 @@
+{
+  "admin": {
+    "addCourse": "Mahsulot qo'shish",
+    "product": "Mahsulotlar",
+    "categories": "Categoriyalar",
+    "order": "Buyurtma",
+    "discount": "Chegirma",
+    "media": "Media",
+    "store": "Do'kon",
+    "cupon_code": "Cupon kodi",
+    "customer": "Foydalanuvchilar"
+  }
+}

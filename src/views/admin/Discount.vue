@@ -2,10 +2,12 @@
   <div>
     <div style="display: flex; justify-content: space-between">
       <div>
-        <h1 style="margin: 5px">{{ t("admin.categories") }}</h1>
+        <h1 style="margin: 5px">{{ t("admin.discount") }}</h1>
       </div>
       <!-- <div>
         <productModal
+          :dialog="dialog"
+          :productId="productId"
           style="
             background-color: burlywood;
             color: white;
@@ -22,22 +24,30 @@
       <thead style="background-color: #f2eae1">
         <tr>
           <th class="text-left">Name</th>
-          <th class="text-left">Description</th>
+          <th class="text-left">Persentage</th>
+          <th class="text-left">Start date</th>
+          <th class="text-left">End date</th>
+          <th class="text-left">Created At</th>
+          <th class="text-left">Updated At</th>
           <th class="text-left">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(categorie, i) in categories" :key="i">
-          <td class="text-left">{{ categorie.name }}</td>
-          <td class="text-left">{{ categorie.description }}</td>
+        <tr v-for="(product, i) in discount" :key="i">
+          <td class="text-left">{{ product.name }}</td>
+          <td class="text-left">{{ product.persentage }}</td>
+          <td class="text-left">{{ product.start_date }}</td>
+          <td class="text-left">{{ product.end_date }}</td>
+          <td class="text-left">{{ product.createdAt }}</td>
+          <td class="text-left">{{ product.updatedAt }}</td>
           <td class="flex">
             <v-icon
-              @click="openProductModal(categorie.id)"
+              @click="openProductModal(product.id)"
               class="my-2 mx-4"
               :icon="'mdi-pencil'"
             >
             </v-icon>
-            <v-icon @click="deleteProduct(categorie.id)" :icon="'mdi-delete'">
+            <v-icon @click="deleteProduct(product.id)" :icon="'mdi-delete'">
             </v-icon>
           </td>
         </tr>
@@ -55,7 +65,7 @@ const { t } = useI18n();
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const categories = ref([]);
+const discount = ref([]);
 
 // const dialog = ref(false);
 // const productId = ref<number | null>(null);
@@ -73,14 +83,14 @@ const deleteProduct = async (productId: number) => {
       return;
     }
     const response = await axios.delete(
-      `http://localhost:4000/api/category/${productId}`,
+      `http://localhost:4000/api/discount/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       }
     );
-    toast.success("Delete Categories");
+    toast.success("Delete Product");
   } catch (error) {
     toast.warning("Error");
   }
@@ -88,8 +98,8 @@ const deleteProduct = async (productId: number) => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://localhost:4000/api/category/all");
-    categories.value = response.data;
+    const response = await axios.get("http://localhost:4000/api/discount/all");
+    discount.value = response.data;
   } catch (error) {
     console.error(error);
   }

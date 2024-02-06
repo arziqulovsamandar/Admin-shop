@@ -1,0 +1,13 @@
+{
+  "admin": {
+    "addCourse": "Добавить новый продукт",
+    "product": "Продукты",
+    "categories": "Категории",
+    "order": "Заказ",
+    "discount": "Скидка",
+    "media": "СМИ",
+    "store": "Магазин",
+    "cupon_code": "Код купона",
+    "customer": "Клиент"
+  }
+}
