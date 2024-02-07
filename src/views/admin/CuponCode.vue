@@ -25,7 +25,6 @@
         <tr>
           <th class="text-left">Name</th>
           <th class="text-left">Persen tage</th>
-          <th class="text-left">Price</th>
           <th class="text-left">End date</th>
           <th class="text-left">Action</th>
         </tr>
@@ -60,15 +59,22 @@ const { t } = useI18n();
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const cupon = ref([]);
+interface Cupon {
+  id: number;
+  name: string;
+  persentage: string;
+  end_date: Date;
+}
+
+const cupon = ref<Cupon[]>([]);
 
 // const dialog = ref(false);
 // const productId = ref<number | null>(null);
 
-// const openProductModal = (id: number) => {
-//   productId.value = id;
-//   dialog.value = true;
-// };
+const openProductModal = (id: number) => {
+  // productId.value = id;
+  // dialog.value = true;
+};
 
 const deleteProduct = async (productId: number) => {
   try {

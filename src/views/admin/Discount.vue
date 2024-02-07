@@ -65,15 +65,25 @@ const { t } = useI18n();
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const discount = ref([]);
+interface Discount {
+  id: number;
+  name: string;
+  persentage: string;
+  start_date: Date;
+  end_date: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const discount = ref<Discount[]>([]);
 
 // const dialog = ref(false);
 // const productId = ref<number | null>(null);
 
-// const openProductModal = (id: number) => {
-//   productId.value = id;
-//   dialog.value = true;
-// };
+const openProductModal = (id: number) => {
+  // productId.value = id;
+  // dialog.value = true;
+};
 
 const deleteProduct = async (productId: number) => {
   try {

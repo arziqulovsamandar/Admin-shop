@@ -71,15 +71,30 @@ const { t } = useI18n();
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const order = ref([]);
+interface Order {
+  id: number;
+  phone: string;
+  order_date: string;
+  status: string;
+  total_count: number;
+  payment_type: string;
+  userAddress_id: number;
+  basket_id: number;
+  user_id: number;
+  product_id: number;
+  cupon_code_id: number;
+  createdAt: Date;
+}
+
+const order = ref<Order[]>([]);
 
 // const dialog = ref(false);
 // const productId = ref<number | null>(null);
 
-// const openProductModal = (id: number) => {
-//   productId.value = id;
-//   dialog.value = true;
-// };
+const openProductModal = (id: number) => {
+  // productId.value = id;
+  // dialog.value = true;
+};
 
 const deleteProduct = async (productId: number) => {
   try {

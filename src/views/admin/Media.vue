@@ -61,15 +61,23 @@ const { t } = useI18n();
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const media = ref([]);
+interface Media {
+  id: number;
+  media_link: string;
+  product_id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const media = ref<Media[]>([]);
 
 // const dialog = ref(false);
 // const productId = ref<number | null>(null);
 
-// const openProductModal = (id: number) => {
-//   productId.value = id;
-//   dialog.value = true;
-// };
+const openProductModal = (id: number) => {
+  // productId.value = id;
+  // dialog.value = true;
+};
 
 const deleteProduct = async (productId: number) => {
   try {

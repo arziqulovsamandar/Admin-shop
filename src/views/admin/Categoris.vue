@@ -23,6 +23,9 @@
         <tr>
           <th class="text-left">Name</th>
           <th class="text-left">Description</th>
+          <th class="text-left">Image</th>
+          <th class="text-left">Created At</th>
+          <th class="text-left">Updated At</th>
           <th class="text-left">Action</th>
         </tr>
       </thead>
@@ -30,6 +33,9 @@
         <tr v-for="(categorie, i) in categories" :key="i">
           <td class="text-left">{{ categorie.name }}</td>
           <td class="text-left">{{ categorie.description }}</td>
+          <td class="text-left">{{ categorie.image }}</td>
+          <td class="text-left">{{ categorie.createdAt }}</td>
+          <td class="text-left">{{ categorie.updatedAt }}</td>
           <td class="flex">
             <v-icon
               @click="openProductModal(categorie.id)"
@@ -55,15 +61,24 @@ const { t } = useI18n();
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const categories = ref([]);
+interface Categories {
+  id: number;
+  name: string;
+  image: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const categories = ref<Categories[]>([]);
 
 // const dialog = ref(false);
 // const productId = ref<number | null>(null);
 
-// const openProductModal = (id: number) => {
-//   productId.value = id;
-//   dialog.value = true;
-// };
+const openProductModal = (id: number) => {
+  // categories.value = id;
+  // dialog.value = true;
+};
 
 const deleteProduct = async (productId: number) => {
   try {

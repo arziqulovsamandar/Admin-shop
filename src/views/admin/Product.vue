@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow-x: scroll; overflow-y: hidden">
     <div style="display: flex; justify-content: space-between">
       <div>
         <h1 style="margin: 5px">{{ t("admin.product") }}</h1>
@@ -20,7 +20,7 @@
         />
       </div>
     </div>
-    <v-table class="my-2" style="overflow-x: auto">
+    <v-table class="my-2">
       <thead style="background-color: #f2eae1">
         <tr>
           <th class="text-left">Name</th>
@@ -54,14 +54,18 @@
           <td class="text-left">{{ product.unit_of_measure }}</td>
           <td class="text-left">{{ product.createdAt }}</td>
           <td class="text-left">{{ product.updatedAt }}</td>
-          <td class="flex">
+          <td>
             <v-icon
+              class="my-2"
               @click="openProductModal(product.id)"
-              class="my-2 mx-4"
               :icon="'mdi-pencil'"
             >
             </v-icon>
-            <v-icon @click="deleteProduct(product.id)" :icon="'mdi-delete'">
+            <v-icon
+              class="my-2"
+              @click="deleteProduct(product.id)"
+              :icon="'mdi-delete'"
+            >
             </v-icon>
           </td>
         </tr>
@@ -79,7 +83,25 @@ const { t } = useI18n();
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const products = ref([]);
+interface Product {
+  id: number;
+  name: string;
+  price: string;
+  description: string;
+  total_count: number;
+  mfg: string;
+  life: string;
+  qr_code: string;
+  value: string;
+  brand: string;
+  is_active: boolean;
+  rating: number;
+  unit_of_measure: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const products = ref<Product[]>([]);
 
 const dialog = ref(false);
 const productId = ref<number | null>(null);
