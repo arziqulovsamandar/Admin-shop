@@ -21,6 +21,7 @@
     <v-table class="my-2">
       <thead style="background-color: #f2eae1">
         <tr>
+          <th class="text-left">Id</th>
           <th class="text-left">Name</th>
           <th class="text-left">Description</th>
           <th class="text-left">Price</th>
@@ -39,6 +40,7 @@
       </thead>
       <tbody>
         <tr v-for="(product, i) in products" :key="i">
+          <td class="text-left">{{ product.id }}</td>
           <td class="text-left">{{ product.name }}</td>
           <td class="text-left">{{ product.description }}</td>
           <td class="text-left">{{ product.price }}</td>
@@ -123,7 +125,7 @@ const deleteProduct = async (productId: number) => {
       return;
     }
     const response = await axios.delete(
-      `http://localhost:4000/api/product/${productId}`,
+      `http://34.136.49.137:4000/api/product/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -138,7 +140,7 @@ const deleteProduct = async (productId: number) => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://localhost:4000/api/product/all");
+    const response = await axios.get("http://34.136.49.137:4000/api/product/all");
     products.value = response.data;
   } catch (error) {
     console.error(error);

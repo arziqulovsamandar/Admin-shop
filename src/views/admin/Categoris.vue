@@ -1,26 +1,29 @@
 <template>
-  <div>
+  <div style="overflow-x: scroll; overflow-y: hidden">
     <div style="display: flex; justify-content: space-between">
       <div>
         <h1 style="margin: 5px">{{ t("admin.categories") }}</h1>
       </div>
-      <!-- <div>
-        <productModal
-          style="
-            background-color: burlywood;
-            color: white;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px 5px;
-            width: auto;
-            cursor: pointer;
-          "
-        />
-      </div> -->
+      <div style="display: flex; justify-content: space-between">
+        <div>
+          <productModal
+            style="
+              background-color: burlywood;
+              color: white;
+              border-radius: 5px;
+              padding: 10px;
+              margin: 10px 5px;
+              width: auto;
+              cursor: pointer;
+            "
+          />
+        </div>
+      </div>
     </div>
     <v-table class="my-2" style="overflow-x: auto">
       <thead style="background-color: #f2eae1">
         <tr>
+          <th class="text-left">Id</th>
           <th class="text-left">Name</th>
           <th class="text-left">Description</th>
           <th class="text-left">Image</th>
@@ -31,6 +34,7 @@
       </thead>
       <tbody>
         <tr v-for="(categorie, i) in categories" :key="i">
+          <td class="text-left">{{ categorie.id }}</td>
           <td class="text-left">{{ categorie.name }}</td>
           <td class="text-left">{{ categorie.description }}</td>
           <td class="text-left">{{ categorie.image }}</td>
@@ -53,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-// import productModal from "../admin/modals/productModal.vue";
+import productModal from "../admin/modals/categoriesModal.vue";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 import { useI18n } from "vue-i18n";
@@ -88,7 +92,7 @@ const deleteProduct = async (productId: number) => {
       return;
     }
     const response = await axios.delete(
-      `http://localhost:4000/api/category/${productId}`,
+      `http://34.136.49.137:4000/api/category/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -103,7 +107,9 @@ const deleteProduct = async (productId: number) => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://localhost:4000/api/category/all");
+    const response = await axios.get(
+      "http://34.136.49.137:4000/api/category/all"
+    );
     categories.value = response.data;
   } catch (error) {
     console.error(error);

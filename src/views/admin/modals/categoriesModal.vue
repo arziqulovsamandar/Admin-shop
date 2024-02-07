@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center">
-    <v-dialog :v-model="dialog" persistent width="500">
+    <v-dialog v-model="dialog" persistent width="500">
       <template v-slot:activator="{ props }">
-        <v-button v-bind="props"> {{ t("admin.addCourse") }}</v-button>
+        <v-button v-bind="props"> New {{ t("admin.categories") }}</v-button>
       </template>
       <v-card>
         <v-card-title>
@@ -20,14 +20,18 @@
                   label="Description"
                   v-model="description"
                 ></v-text-field>
-                <v-text-field label="Images" v-model="image"></v-text-field>
+                <v-file-input
+                  label="Images"
+                  v-model="image"
+                  @change="handleFileChange"
+                ></v-file-input>
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="closeModal">
+          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
             Close
           </v-btn>
           <v-btn color="blue-darken-1" variant="text" @click="updateProduct">
@@ -50,36 +54,35 @@ const toast = useToast();
 
 const { t } = useI18n();
 
-interface Props {
-  dialog: boolean;
-}
-
-const props: Props = defineProps();
-
-const dialog = ref(props.dialog);
-
-console.log(dialog);
-const closeModal = () => {
-  dialog.value = false;
-};
+const dialog = ref(false);
 
 const name = ref("");
 const description = ref("");
 const image = ref("");
 
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  image.value = file;
+};
+
 const saveProduct = async () => {
   try {
-    const produc = {
-      name: name.value,
-      description: description.value,
-      image: image.value,
-    };
+    const formData = new FormData();
+    formData.append("name", name.value);
+    formData.append("description", description.value);
+    formData.append("image", image.value);
+
     const response = await axios.post(
-      "http://localhost:4000/api/category/create",
-      produc
+      "http://34.136.49.137:4000/api/category/create",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     dialog.value = false;
-    toast.success("Create Product");
+    toast.success("Create Categories");
   } catch (error) {
     toast.warning("Error");
     console.log(error);
@@ -88,14 +91,19 @@ const saveProduct = async () => {
 
 const updateProduct = async () => {
   try {
-    const produc = {
-      name: name.value,
-      description: description.value,
-      image: image.value,
-    };
+    const formData = new FormData();
+    formData.append("name", name.value);
+    formData.append("description", description.value);
+    formData.append("image", image.value);
+
     const response = await axios.post(
-      `http://localhost:4000/api/category/${productId}`,
-      produc
+      `http://34.136.49.137:4000/api/category/${productId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     dialog.value = false;
     toast.success("Create Product");

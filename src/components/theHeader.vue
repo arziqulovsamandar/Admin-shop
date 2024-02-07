@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex home12" style="background-color: rgb(234, 236, 173)">
+  <div
+    class="d-flex home12"
+    style="background-color: rgb(234, 236, 173)"
+  >
     <h3 style="font-weight: 700; color: blue; font-size: 26px">Admin</h3>
     <langSwitcher />
   </div>

@@ -1,13 +1,11 @@
 <template>
-  <div>
+  <div style="overflow-x: scroll; overflow-y: hidden">
     <div style="display: flex; justify-content: space-between">
       <div>
-        <h1 style="margin: 5px">{{ t("admin.product") }}</h1>
+        <h1 style="margin: 5px">{{ t("admin.store") }}</h1>
       </div>
-      <!-- <div>
+      <div>
         <productModal
-          :dialog="dialog"
-          :productId="productId"
           style="
             background-color: burlywood;
             color: white;
@@ -18,7 +16,7 @@
             cursor: pointer;
           "
         />
-      </div> -->
+      </div>
     </div>
     <v-table class="my-2" style="overflow-x: auto">
       <thead style="background-color: #f2eae1">
@@ -53,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-// import productModal from "../admin/modals/productModal.vue";
+import productModal from "../admin/modals/storeModal.vue";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 import { useI18n } from "vue-i18n";
@@ -87,7 +85,7 @@ const deleteProduct = async (productId: number) => {
       return;
     }
     const response = await axios.delete(
-      `http://localhost:4000/api/store/${productId}`,
+      `http://34.136.49.137:4000/api/store/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -102,7 +100,19 @@ const deleteProduct = async (productId: number) => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://localhost:4000/api/store/all");
+    const accessToken = localStorage.getItem("token");
+    if (!accessToken) {
+      window.location.href = "/login";
+      return;
+    }
+    const response = await axios.get(
+      "http://34.136.49.137:4000/api/store/all",
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     store.value = response.data;
   } catch (error) {
     console.error(error);

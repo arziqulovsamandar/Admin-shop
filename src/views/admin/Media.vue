@@ -1,13 +1,11 @@
 <template>
-  <div>
+  <div style="overflow-x: scroll; overflow-y: hidden">
     <div style="display: flex; justify-content: space-between">
       <div>
         <h1 style="margin: 5px">{{ t("admin.media") }}</h1>
       </div>
-      <!-- <div>
+      <div>
         <productModal
-          :dialog="dialog"
-          :productId="productId"
           style="
             background-color: burlywood;
             color: white;
@@ -18,11 +16,12 @@
             cursor: pointer;
           "
         />
-      </div> -->
+      </div>
     </div>
     <v-table class="my-2" style="overflow-x: auto">
       <thead style="background-color: #f2eae1">
         <tr>
+          <th class="text-left">Id</th>
           <th class="text-left">Media link</th>
           <th class="text-left">Product id</th>
           <th class="text-left">Created At</th>
@@ -32,6 +31,7 @@
       </thead>
       <tbody>
         <tr v-for="(product, i) in media" :key="i">
+          <td class="text-left">{{ product.id }}</td>
           <td class="text-left">{{ product.media_link }}</td>
           <td class="text-left">{{ product.product_id }}</td>
           <td class="text-left">{{ product.createdAt }}</td>
@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-// import productModal from "../admin/modals/productModal.vue";
+import productModal from "../admin/modals/mediaModal.vue";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 import { useI18n } from "vue-i18n";
@@ -87,7 +87,7 @@ const deleteProduct = async (productId: number) => {
       return;
     }
     const response = await axios.delete(
-      `http://localhost:4000/api/media/${productId}`,
+      `http://34.136.49.137:4000/api/media/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -102,7 +102,7 @@ const deleteProduct = async (productId: number) => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://localhost:4000/api/media/all");
+    const response = await axios.get("http://34.136.49.137:4000/api/media/all");
     media.value = response.data;
   } catch (error) {
     console.error(error);

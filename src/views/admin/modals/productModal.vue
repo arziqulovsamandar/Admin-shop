@@ -46,6 +46,9 @@
           <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
             Close
           </v-btn>
+          <v-btn color="blue-darken-1" variant="text" @click="updateProduct">
+            Update
+          </v-btn>
           <v-btn color="blue-darken-1" variant="text" @click="saveProduct">
             Create
           </v-btn>
@@ -55,7 +58,7 @@
   </v-row>
 </template>
 <script setup lang="ts">
-import { ref} from "vue";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useToast } from "vue-toastification";
 import axios from "axios";
@@ -101,7 +104,7 @@ const saveProduct = async () => {
       unit_of_measure: unit_of_measure.value,
     };
     const response = await axios.post(
-      "http://localhost:4000/api/product/create",
+      "http://34.136.49.137:4000/api/product/create",
       produc
     );
     dialog.value = false;
@@ -128,7 +131,7 @@ const updateProduct = async () => {
       unit_of_measure: unit_of_measure.value,
     };
     const response = await axios.post(
-      "http://localhost:4000/api/product/create",
+      "http://34.136.49.137:4000/api/product/create",
       produc
     );
     dialog.value = false;

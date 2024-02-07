@@ -1,13 +1,11 @@
 <template>
-  <div>
+  <div style="overflow-x: scroll; overflow-y: hidden">
     <div style="display: flex; justify-content: space-between">
       <div>
         <h1 style="margin: 5px">{{ t("admin.order") }}</h1>
       </div>
-      <!-- <div>
+      <div>
         <productModal
-          :dialog="dialog"
-          :productId="productId"
           style="
             background-color: burlywood;
             color: white;
@@ -18,11 +16,12 @@
             cursor: pointer;
           "
         />
-      </div> -->
+      </div>
     </div>
     <v-table class="my-2" style="overflow-x: auto">
       <thead style="background-color: #f2eae1">
         <tr>
+          <th class="text-left">Id</th>
           <th class="text-left">Phone</th>
           <th class="text-left">Order date</th>
           <th class="text-left">Created At</th>
@@ -37,6 +36,7 @@
       </thead>
       <tbody>
         <tr v-for="(product, i) in order" :key="i">
+          <td class="text-left">{{ product.id }}</td>
           <td class="text-left">{{ product.phone }}</td>
           <td class="text-left">{{ product.order_date }}</td>
           <td class="text-left">{{ product.createdAt }}</td>
@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-// import productModal from "../admin/modals/productModal.vue";
+import productModal from "../admin/modals/orderModal.vue";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 import { useI18n } from "vue-i18n";
@@ -104,7 +104,7 @@ const deleteProduct = async (productId: number) => {
       return;
     }
     const response = await axios.delete(
-      `http://localhost:4000/api/order/${productId}`,
+      `http://34.136.49.137:4000/api/order/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -119,7 +119,7 @@ const deleteProduct = async (productId: number) => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get("http://localhost:4000/api/order/all");
+    const response = await axios.get("http://34.136.49.137:4000/api/order/all");
     order.value = response.data;
   } catch (error) {
     console.error(error);

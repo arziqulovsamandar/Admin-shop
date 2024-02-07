@@ -23,7 +23,7 @@
           ><li>{{ t("admin.store") }}</li></router-link
         >
         <router-link to="/cupon_code" class="nav-link"
-          ><li>{{ t("cupon_code") }}</li></router-link
+          ><li>{{ t("admin.cupon_code") }}</li></router-link
         >
         <router-link to="/customer" class="nav-link"
           ><li>{{ t("admin.customer") }}</li></router-link
