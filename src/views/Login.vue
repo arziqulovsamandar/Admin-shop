@@ -3,8 +3,9 @@
     <v-container>
       <v-row justify="center">
         <v-col cols="12" sm="8" md="6">
-          <v-card>
+          <v-card style="box-shadow: 1px 1px 2px black, 0 0 10px blue, 0 0 5px darkblue;">
             <v-card-title>
+              <applogo style="margin: 20px 140px" />
               <h1 class="text-center">Login</h1>
             </v-card-title>
             <v-card-text>
@@ -35,7 +36,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "../store/auth";
-
+import Applogo from "../components/app/app-logo.vue";
 const store = useAuthStore();
 
 const email = ref("");

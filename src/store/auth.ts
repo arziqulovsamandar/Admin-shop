@@ -14,7 +14,7 @@ export const useAuthStore = defineStore({
         let res = await authApi.login(payload);
         if (res?.tokens?.access_token) {
           localStorage.setItem("token", res?.tokens?.access_token);
-          toast.success("Data successful");
+          toast.success("Login");
           await router.push({ name: "Admin" });
         }
       } catch (err) {

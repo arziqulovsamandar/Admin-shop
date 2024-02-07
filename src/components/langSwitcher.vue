@@ -2,16 +2,14 @@
   <div class="langswitcher">
     <v-menu open-on-hover>
       <template v-slot:activator="{ props }">
-        <span id="lang" class="langs" v-bind="props">{{ currentLang }}</span>
+        <div>
+          <select @change="onLangChange($event)">
+            <option v-for="(item, i) in langs" :key="i" :value="item.locale">
+              {{ item.text }}
+            </option>
+          </select>
+        </div>
       </template>
-
-      <div>
-        <select @change="onLangChange($event)">
-          <option v-for="(item, i) in langs" :key="i" :value="item.locale">
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
     </v-menu>
   </div>
 </template>

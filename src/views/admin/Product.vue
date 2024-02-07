@@ -6,8 +6,6 @@
       </div>
       <div>
         <productModal
-          :dialog="dialog"
-          :productId="productId"
           style="
             background-color: burlywood;
             color: white;
@@ -83,6 +81,13 @@ const { t } = useI18n();
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
+// const dialog = ref(false);
+
+// const updateDialog = (value) => {
+//   console.log(value);
+//   dialog.value = value;
+// };
+
 interface Product {
   id: number;
   name: string;
@@ -103,12 +108,11 @@ interface Product {
 
 const products = ref<Product[]>([]);
 
-const dialog = ref(false);
 const productId = ref<number | null>(null);
 
 const openProductModal = (id: number) => {
-  productId.value = id;
-  dialog.value = true;
+  // productId.value = id;
+  // dialog.value = true;
 };
 
 const deleteProduct = async (productId: number) => {

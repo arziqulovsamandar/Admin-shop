@@ -1,8 +1,10 @@
 <template>
   <v-row justify="center">
-    <v-dialog :v-model="dialog" persistent width="500">
+    <v-dialog v-model="dialog" persistent width="500">
       <template v-slot:activator="{ props }">
-        <v-button v-bind="props"> {{ t("admin.addCourse") }}</v-button>
+        <button v-bind="props">
+          {{ t("admin.addCourse") }}
+        </button>
       </template>
       <v-card>
         <v-card-title>
@@ -41,7 +43,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="closeModal">
+          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
             Close
           </v-btn>
           <v-btn color="blue-darken-1" variant="text" @click="saveProduct">
@@ -53,26 +55,23 @@
   </v-row>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref} from "vue";
 import { useI18n } from "vue-i18n";
 import { useToast } from "vue-toastification";
 import axios from "axios";
 const toast = useToast();
 
 const { t } = useI18n();
+const dialog = ref(false);
+// defineProps<{
+//   dialog: boolean;
+//   productId: number;
+// }>();
+// const emit = defineEmits(["update:dialog"]);
 
-interface Props {
-  dialog: boolean;
-}
-
-const props: Props = defineProps();
-
-const dialog = ref(props.dialog);
-
-console.log(dialog);
-const closeModal = () => {
-  dialog.value = false;
-};
+// const openenDialog = () => {
+//   // emit("update:dialog", true);
+// };
 
 const name = ref("");
 const description = ref("");
