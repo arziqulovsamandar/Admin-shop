@@ -91,6 +91,11 @@ const router = createRouter({
       component: () => import("@/views/NotFound.vue"),
     },
     {
+      path: "/singilproduct",
+      name:"SingilProduc",
+      component: () => import("@/views/admin/SingilPages/productSingilpages.vue"),
+    },
+    {
       path: "/",
       children: [{ path: "/", component: Login, name: RT_LOGIN }],
     },

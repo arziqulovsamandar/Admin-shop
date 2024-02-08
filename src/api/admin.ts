@@ -1,9 +1,26 @@
-import axios from "@/plugins/axios";
+import api from "@/plugins/axois";
+import axiosClient from "./apiClient";
+const url = import.meta.env.VITE_BASE_URL;
 
-const url: string = import.meta.env.VITE_BASE_URL;
-
-function apifetchStudents() {
-  return axios.get("/user");
+function apifetchProductAll() {
+  return api.get("/product/all");
 }
 
-export { apifetchStudents };
+function apifetchSingleProduct(id) {
+  return api.get(`/product/${id}`);
+}
+
+function apideleteProduct(id) {
+  return api.delete(`/product/${id}`);
+}
+
+function apiupdateProduct(id) {
+  return api.put(`/product/${id}`);
+}
+
+export {
+  apideleteProduct,
+  apifetchProductAll,
+  apifetchSingleProduct,
+  apiupdateProduct,
+};

@@ -23,50 +23,60 @@
         <tr>
           <th class="text-left">Id</th>
           <th class="text-left">Name</th>
-          <th class="text-left">Description</th>
           <th class="text-left">Price</th>
           <th class="text-left">Total Count</th>
           <th class="text-left">Manufactured Date</th>
           <th class="text-left">Life</th>
-          <th class="text-left">QR Code</th>
           <th class="text-left">Value</th>
           <th class="text-left">Brand</th>
-          <th class="text-left">Is Active</th>
-          <th class="text-left">Unit of Measure</th>
-          <th class="text-left">Created At</th>
-          <th class="text-left">Updated At</th>
           <th class="text-left">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(product, i) in products" :key="i">
+        <tr
+          v-for="(product, i) in products"
+          :key="i"
+          @click="singil(product.id)"
+        >
           <td class="text-left">{{ product.id }}</td>
           <td class="text-left">{{ product.name }}</td>
-          <td class="text-left">{{ product.description }}</td>
           <td class="text-left">{{ product.price }}</td>
           <td class="text-left">{{ product.total_count }}</td>
           <td class="text-left">{{ product.mfg }}</td>
           <td class="text-left">{{ product.life }}</td>
-          <td class="text-left">{{ product.qr_code }}</td>
           <td class="text-left">{{ product.value }}</td>
           <td class="text-left">{{ product.brand }}</td>
-          <td class="text-left">{{ product.is_active }}</td>
-          <td class="text-left">{{ product.unit_of_measure }}</td>
-          <td class="text-left">{{ product.createdAt }}</td>
-          <td class="text-left">{{ product.updatedAt }}</td>
           <td>
-            <v-icon
-              class="my-2"
-              @click="openProductModal(product.id)"
-              :icon="'mdi-pencil'"
-            >
-            </v-icon>
-            <v-icon
-              class="my-2"
-              @click="deleteProduct(product.id)"
-              :icon="'mdi-delete'"
-            >
-            </v-icon>
+            <v-row justify="center">
+              <v-dialog v-model="dialog" persistent width="auto">
+                <template v-slot:activator="{ props }">
+                  <v-icon class="my-2" v-bind="props" :icon="'mdi-delete'">
+                  </v-icon>
+                </template>
+                <v-card>
+                  <v-card-title class="text-h5">
+                    Delete Products?
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="dialog = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="deleteProducts(product.id)"
+                    >
+                      Delete
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-row>
           </td>
         </tr>
       </tbody>
@@ -76,74 +86,50 @@
 
 <script setup lang="ts">
 import productModal from "../admin/modals/productModal.vue";
-import { useToast } from "vue-toastification";
-const toast = useToast();
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { ref } from "vue";
+import router from "@/router";
+import { useAdmin } from "@/composables/admin";
+const { products } = useAdmin();
 
-// const dialog = ref(false);
+const { deleteProduct } = useAdmin();
 
-// const updateDialog = (value) => {
-//   console.log(value);
-//   dialog.value = value;
+const dialog = ref(false);
+
+const singil = (productId: number) => {
+  router.push({
+    path: "/singilproduct",
+    query: { id: productId },
+  });
+};
+
+const deleteProducts = (productId: number) => {
+  console.log(productId);
+  deleteProduct(productId);
+};
+
+// const deleteProduct = async (productId: number) => {
+//   try {
+//     const accessToken = localStorage.getItem("token");
+//     if (!accessToken) {
+//       window.location.href = "/login";
+//       return;
+//     }
+//     const response = await axios.delete(
+//       `http://34.136.49.137:4000/api/product/${productId}`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${accessToken}`,
+//         },
+//       }
+//     );
+//     toast.success("Delete Product");
+//     dialog.value = false;
+//   } catch (error) {
+//     toast.warning("Error");
+//     dialog.value = false;
+//   }
 // };
-
-interface Product {
-  id: number;
-  name: string;
-  price: string;
-  description: string;
-  total_count: number;
-  mfg: string;
-  life: string;
-  qr_code: string;
-  value: string;
-  brand: string;
-  is_active: boolean;
-  rating: number;
-  unit_of_measure: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const products = ref<Product[]>([]);
-
-const productId = ref<number | null>(null);
-
-const openProductModal = (id: number) => {
-  // productId.value = id;
-  // dialog.value = true;
-};
-
-const deleteProduct = async (productId: number) => {
-  try {
-    const accessToken = localStorage.getItem("token");
-    if (!accessToken) {
-      window.location.href = "/login";
-      return;
-    }
-    const response = await axios.delete(
-      `http://34.136.49.137:4000/api/product/${productId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    toast.success("Delete Product");
-  } catch (error) {
-    toast.warning("Error");
-  }
-};
-
-onMounted(async () => {
-  try {
-    const response = await axios.get("http://34.136.49.137:4000/api/product/all");
-    products.value = response.data;
-  } catch (error) {
-    console.error(error);
-  }
-});
 </script>
+<style scoped></style>

@@ -46,9 +46,6 @@
           <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="updateProduct">
-            Update
-          </v-btn>
           <v-btn color="blue-darken-1" variant="text" @click="saveProduct">
             Create
           </v-btn>

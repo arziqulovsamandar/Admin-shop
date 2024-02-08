@@ -23,7 +23,7 @@
         <tr>
           <th class="text-left">Id</th>
           <th class="text-left">Media link</th>
-          <th class="text-left">Product id</th>
+          <th class="text-left">Product name</th>
           <th class="text-left">Created At</th>
           <th class="text-left">Updated At</th>
           <th class="text-left">Action</th>
@@ -32,8 +32,14 @@
       <tbody>
         <tr v-for="(product, i) in media" :key="i">
           <td class="text-left">{{ product.id }}</td>
-          <td class="text-left">{{ product.media_link }}</td>
-          <td class="text-left">{{ product.product_id }}</td>
+          <td class="text-left">
+            <img
+              style="width: 200px; height: 200px"
+              :src="product.media_link"
+              alt="Rasm"
+            />
+          </td>
+          <td class="text-left">{{ product.product.name }}</td>
           <td class="text-left">{{ product.createdAt }}</td>
           <td class="text-left">{{ product.updatedAt }}</td>
           <td class="flex">

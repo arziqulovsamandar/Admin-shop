@@ -37,7 +37,14 @@
           <td class="text-left">{{ categorie.id }}</td>
           <td class="text-left">{{ categorie.name }}</td>
           <td class="text-left">{{ categorie.description }}</td>
-          <td class="text-left">{{ categorie.image }}</td>
+          <!-- <td class="text-left">{{ categorie.image }}</td> -->
+          <td class="text-left">
+            <img
+              style="width: 200px; height: 200px"
+              :src="categorie.image"
+              alt="Rasm"
+            />
+          </td>
           <td class="text-left">{{ categorie.createdAt }}</td>
           <td class="text-left">{{ categorie.updatedAt }}</td>
           <td class="flex">
@@ -57,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import productModal from "../admin/modals/categoriesModal.vue";
+import productModal from "@/views/admin/modals/categoriesModal.vue";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 import { useI18n } from "vue-i18n";

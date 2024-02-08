@@ -22,7 +22,7 @@
       <thead style="background-color: #f2eae1">
         <tr>
           <th class="text-left">Add Count</th>
-          <th class="text-left">Product id</th>
+          <th class="text-left">Product name</th>
           <th class="text-left">Created At</th>
           <th class="text-left">Updated At</th>
           <th class="text-left">Action</th>
@@ -31,7 +31,7 @@
       <tbody>
         <tr v-for="(product, i) in store" :key="i">
           <td class="text-left">{{ product.addCount }}</td>
-          <td class="text-left">{{ product.product_id }}</td>
+          <td class="text-left">{{ product.product.name }}</td>
           <td class="text-left">{{ product.createdAt }}</td>
           <td class="text-left">{{ product.updatedAt }}</td>
           <td class="flex">
