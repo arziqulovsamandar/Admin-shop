@@ -9,7 +9,8 @@ export const useAdmin = () => {
   const route = useRoute();
 
   const { products, singleProduct } = storeToRefs(store);
-  const { getProducts, getSingleProduct, deleteProduct} = useAdminStore();
+  const { getProducts, getSingleProduct, deleteProduct, createProduct } =
+    useAdminStore();
 
   onMounted(async () => {
     await getProducts();
@@ -23,6 +24,9 @@ export const useAdmin = () => {
     await deleteProduct(id);
   });
 
+  onMounted(async () => {
+    await createProduct(produc);
+  });
 
   return {
     singleProduct,
@@ -30,6 +34,7 @@ export const useAdmin = () => {
     route,
     router,
     getSingleProduct,
-    deleteProduct
+    deleteProduct,
+    createProduct,
   };
 };

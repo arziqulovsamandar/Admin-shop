@@ -4,11 +4,13 @@ import {
   apifetchProductAll,
   apifetchSingleProduct,
   apiupdateProduct,
+  apicreateProduct,
 } from "@/api/admin";
 // import { signin } from '@/api/admin';
 // import decodeJwt from '@/functions/tokenParser';
 // import router from '@/router';
 import { useToast } from "vue-toastification";
+import { log } from "console";
 const toast = useToast();
 
 export const useAdminStore = defineStore("product", {
@@ -34,7 +36,8 @@ export const useAdminStore = defineStore("product", {
 
     async deleteProduct(id: number | string) {
       try {
-        const res = await apideleteProduct(id);
+        const accessToken = localStorage.getItem("token");
+        const res = await apideleteProduct(id, accessToken);
         if (!res?.data?.users && res.status !== 200) {
           return;
         }
@@ -47,6 +50,20 @@ export const useAdminStore = defineStore("product", {
       }
     },
 
+    async createProduct(produc) {
+      try {
+        const res = await apicreateProduct(produc);
+        if (!res?.data?.users && res.status !== 200) {
+          return;
+        }
+        toast.success("Create Product");
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.warning(error.message);
+          return;
+        }
+      }
+    },
 
     async getSingleProduct(id: number | string) {
       try {

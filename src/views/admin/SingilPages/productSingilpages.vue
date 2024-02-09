@@ -2,11 +2,11 @@
   <div>
     <div style="display: flex; justify-content: space-between">
       <h2 style="margin: 10px">Product</h2>
-      <a href="/singleProduct" class="button">Home</a>
+      <a href="/products" class="button">Home</a>
     </div>
     <div class="tables">
       <h1>{{ singleProduct.name }}</h1>
-      <p>{{ singleProduct.description }}</p>
+      <p>Description: {{ singleProduct.description }}</p>
       <p>Price: {{ singleProduct.price }}</p>
       <p>Total count: {{ singleProduct.total_count }}</p>
       <p>Manufacturing date: {{ singleProduct.mfg }}</p>
@@ -26,7 +26,6 @@
 import { useAdmin } from "@/composables/admin";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-
 const router = useRouter();
 const id = router.currentRoute.value.query.id;
 const { singleProduct, getSingleProduct, route } = useAdmin();

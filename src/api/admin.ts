@@ -1,5 +1,4 @@
 import api from "@/plugins/axois";
-import axiosClient from "./apiClient";
 const url = import.meta.env.VITE_BASE_URL;
 
 function apifetchProductAll() {
@@ -10,12 +9,19 @@ function apifetchSingleProduct(id) {
   return api.get(`/product/${id}`);
 }
 
-function apideleteProduct(id) {
-  return api.delete(`/product/${id}`);
+function apideleteProduct(id, accessToken) {
+  return api.delete(`/product/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 }
-
 function apiupdateProduct(id) {
   return api.put(`/product/${id}`);
+}
+
+function apicreateProduct(produc) {
+  return api.post(`/product/create`, produc);
 }
 
 export {
@@ -23,4 +29,5 @@ export {
   apifetchProductAll,
   apifetchSingleProduct,
   apiupdateProduct,
+  apicreateProduct,
 };

@@ -107,29 +107,7 @@ const singil = (productId: number) => {
 const deleteProducts = (productId: number) => {
   console.log(productId);
   deleteProduct(productId);
+  dialog.value = false;
 };
-
-// const deleteProduct = async (productId: number) => {
-//   try {
-//     const accessToken = localStorage.getItem("token");
-//     if (!accessToken) {
-//       window.location.href = "/login";
-//       return;
-//     }
-//     const response = await axios.delete(
-//       `http://34.136.49.137:4000/api/product/${productId}`,
-//       {
-//         headers: {
-//           Authorization: `Bearer ${accessToken}`,
-//         },
-//       }
-//     );
-//     toast.success("Delete Product");
-//     dialog.value = false;
-//   } catch (error) {
-//     toast.warning("Error");
-//     dialog.value = false;
-//   }
-// };
 </script>
 <style scoped></style>

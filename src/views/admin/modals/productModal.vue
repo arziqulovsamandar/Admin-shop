@@ -57,21 +57,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useToast } from "vue-toastification";
-import axios from "axios";
-const toast = useToast();
+import { useAdmin } from "@/composables/admin";
 
 const { t } = useI18n();
 const dialog = ref(false);
-// defineProps<{
-//   dialog: boolean;
-//   productId: number;
-// }>();
-// const emit = defineEmits(["update:dialog"]);
-
-// const openenDialog = () => {
-//   // emit("update:dialog", true);
-// };
 
 const name = ref("");
 const description = ref("");
@@ -85,57 +74,22 @@ const brand = ref("");
 const rating = ref("");
 const unit_of_measure = ref("");
 
+const { createProduct } = useAdmin();
 const saveProduct = async () => {
-  try {
-    const produc = {
-      name: name.value,
-      description: description.value,
-      price: price.value,
-      total_count: parseInt(total_count.value),
-      mfg: mfg.value,
-      life: life.value,
-      qr_code: qr_code.value,
-      value: value.value,
-      brand: brand.value,
-      rating: parseInt(rating.value),
-      unit_of_measure: unit_of_measure.value,
-    };
-    const response = await axios.post(
-      "http://34.136.49.137:4000/api/product/create",
-      produc
-    );
-    dialog.value = false;
-    toast.success("Create Product");
-  } catch (error) {
-    toast.warning("Error");
-    console.log(error);
-  }
-};
-
-const updateProduct = async () => {
-  try {
-    const produc = {
-      name: name.value,
-      description: description.value,
-      price: price.value,
-      total_count: parseInt(total_count.value),
-      mfg: mfg.value,
-      life: life.value,
-      qr_code: qr_code.value,
-      value: value.value,
-      brand: brand.value,
-      rating: parseInt(rating.value),
-      unit_of_measure: unit_of_measure.value,
-    };
-    const response = await axios.post(
-      "http://34.136.49.137:4000/api/product/create",
-      produc
-    );
-    dialog.value = false;
-    toast.success("Create Product");
-  } catch (error) {
-    toast.warning("Error");
-    console.log(error);
-  }
+  const produc = {
+    name: name.value,
+    description: description.value,
+    price: price.value,
+    total_count: parseInt(total_count.value),
+    mfg: mfg.value,
+    life: life.value,
+    qr_code: qr_code.value,
+    value: value.value,
+    brand: brand.value,
+    rating: parseInt(rating.value),
+    unit_of_measure: unit_of_measure.value,
+  };
+  await createProduct(produc);
+  dialog.value = false;
 };
 </script>
