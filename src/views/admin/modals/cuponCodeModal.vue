@@ -1,4 +1,3 @@
-src/views/admin/modals/mediaModal.vu
 <template>
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent width="500">
@@ -7,7 +6,7 @@ src/views/admin/modals/mediaModal.vu
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">New product</span>
+          <span class="text-h5">New Cupon code</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -31,9 +30,6 @@ src/views/admin/modals/mediaModal.vu
           <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="updateProduct">
-            Update
-          </v-btn>
           <v-btn color="blue-darken-1" variant="text" @click="saveProduct">
             Create
           </v-btn>
@@ -45,69 +41,24 @@ src/views/admin/modals/mediaModal.vu
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useToast } from "vue-toastification";
-import axios from "axios";
-const toast = useToast();
-
 const { t } = useI18n();
 
 const dialog = ref(false);
+
+import { useAdminStore } from "@/store/admin";
+const { createCuponCode } = useAdminStore();
 
 const name = ref("");
 const persentage = ref("");
 const end_date = ref("");
 
-const saveProduct = async (productId: number) => {
-  try {
-    const produc = {
-      name: name.value,
-      persentage: parseInt(persentage.value),
-      end_date: new Date(end_date.value).toISOString(),
-    };
-    const accessToken = localStorage.getItem("token");
-    if (!accessToken) {
-      window.location.href = "/login";
-      return;
-    }
-
-    const response = await axios.post(
-      "http://34.136.49.137:4000/api/cupon_code/create",
-      produc,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    dialog.value = false;
-    toast.success("Create Cupon code");
-  } catch (error) {
-    toast.warning("Error");
-    console.log(error);
-  }
-};
-
-const updateProduct = async () => {
-  try {
-    const formData = {
-      name: name.value,
-      persantage: parseInt(persentage.value),
-      end_date: new Date(end_date.value).toISOString(),
-    };
-    const response = await axios.post(
-      `http://34.136.49.137:4000/api/cupon_code/${productId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    dialog.value = false;
-    toast.success("Create Product");
-  } catch (error) {
-    toast.warning("Error");
-    console.log(error);
-  }
+const saveProduct = async () => {
+  const produc = {
+    name: name.value,
+    persentage: parseInt(persentage.value),
+    end_date: new Date(end_date.value).toISOString(),
+  };
+  await createCuponCode(produc);
+  dialog.value = false;
 };
 </script>

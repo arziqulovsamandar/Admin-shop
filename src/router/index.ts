@@ -92,8 +92,33 @@ const router = createRouter({
     },
     {
       path: "/singilproduct",
-      name:"SingilProduc",
-      component: () => import("@/views/admin/SingilPages/productSingilpages.vue"),
+      name: "SingilProduc",
+      component: () => import("@/views/admin/SingilPages/productSingil.vue"),
+    },
+    {
+      path: "/singilcategory",
+      name: "SingilCategory",
+      component: () => import("@/views/admin/SingilPages/categorySingil.vue"),
+    },
+    {
+      path: "/singildicsount",
+      name: "SingilDiscount",
+      component: () => import("@/views/admin/SingilPages/discountSingil.vue"),
+    },
+    {
+      path: "/singilmedia",
+      name: "SingilDiscount",
+      component: () => import("@/views/admin/SingilPages/mediaSingil.vue"),
+    },
+    {
+      path: "/singilstore",
+      name: "SingilStore",
+      component: () => import("@/views/admin/SingilPages/storeSingil.vue"),
+    },
+    {
+      path: "/singilcupon_code",
+      name: "SingilCuponCode",
+      component: () => import("@/views/admin/SingilPages/cuponCodeSingil.vue"),
     },
     {
       path: "/",

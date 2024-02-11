@@ -4,37 +4,65 @@ import { onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export const useAdmin = () => {
-  const store = useAdminStore();
+  const storee = useAdminStore();
   const router = useRouter();
   const route = useRoute();
-
-  const { products, singleProduct } = storeToRefs(store);
-  const { getProducts, getSingleProduct, deleteProduct, createProduct } =
-    useAdminStore();
+  const {
+    product,
+    singleProduct,
+    category,
+    singleCategory,
+    order,
+    discount,
+    singilDiscount,
+    media,
+    singilMedia,
+    store,
+    singilStore,
+    cupon_code,
+    singilcupon_code,
+  } = storeToRefs(storee);
+  const {
+    getProducts,
+    getCategory,
+    getOrder,
+    getDiscount,
+    getMedia,
+    getCupon_code,
+    getStore,
+  } = useAdminStore();
 
   onMounted(async () => {
     await getProducts();
-  });
 
-  onMounted(async () => {
-    await getSingleProduct(id);
-  });
+    await getCategory();
 
-  onMounted(async () => {
-    await deleteProduct(id);
-  });
+    // await getOrder();
 
-  onMounted(async () => {
-    await createProduct(produc);
+    await getDiscount();
+
+    await getMedia();
+
+    await getCupon_code();
+
+    await getStore();
   });
 
   return {
     singleProduct,
-    products,
+    product,
     route,
     router,
-    getSingleProduct,
-    deleteProduct,
-    createProduct,
+    category,
+    singleCategory,
+    order,
+    discount,
+    singilDiscount,
+    media,
+    singilMedia,
+    store,
+    singilStore,
+    cupon_code,
+    singilcupon_code,
   };
 };

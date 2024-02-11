@@ -30,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(product, i) in media" :key="i">
+        <tr v-for="(product, i) in media" :key="i" @click="singil(product.id)">
           <td class="text-left">{{ product.id }}</td>
           <td class="text-left">
             <img
@@ -42,15 +42,37 @@
           <td class="text-left">{{ product.product.name }}</td>
           <td class="text-left">{{ product.createdAt }}</td>
           <td class="text-left">{{ product.updatedAt }}</td>
-          <td class="flex">
-            <v-icon
-              @click="openProductModal(product.id)"
-              class="my-2 mx-4"
-              :icon="'mdi-pencil'"
-            >
-            </v-icon>
-            <v-icon @click="deleteProduct(product.id)" :icon="'mdi-delete'">
-            </v-icon>
+          <td>
+            <v-row justify="center">
+              <v-dialog v-model="dialog" persistent width="auto">
+                <template v-slot:activator="{ props }">
+                  <v-icon class="my-2" v-bind="props" :icon="'mdi-delete'">
+                  </v-icon>
+                </template>
+                <v-card>
+                  <v-card-title class="text-h5">
+                    Delete Products?
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="dialog = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="deleteProducts(product.id)"
+                    >
+                      Delete
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-row>
           </td>
         </tr>
       </tbody>
@@ -60,58 +82,29 @@
 
 <script setup lang="ts">
 import productModal from "../admin/modals/mediaModal.vue";
-import { useToast } from "vue-toastification";
-const toast = useToast();
+
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { ref } from "vue";
 
-interface Media {
-  id: number;
-  media_link: string;
-  product_id: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
+const dialog = ref(false);
 
-const media = ref<Media[]>([]);
+import router from "@/router";
+import { useAdminStore } from "@/store/admin";
+import { useAdmin } from "@/composables/admin";
 
-// const dialog = ref(false);
-// const productId = ref<number | null>(null);
+const { deleteMedia } = useAdminStore();
+const { media } = useAdmin();
 
-const openProductModal = (id: number) => {
-  // productId.value = id;
-  // dialog.value = true;
+const singil = (productId: number) => {
+  router.push({
+    path: "/singilmedia",
+    query: { id: productId },
+  });
 };
 
-const deleteProduct = async (productId: number) => {
-  try {
-    const accessToken = localStorage.getItem("token");
-    if (!accessToken) {
-      window.location.href = "/login";
-      return;
-    }
-    const response = await axios.delete(
-      `http://34.136.49.137:4000/api/media/${productId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    toast.success("Delete Product");
-  } catch (error) {
-    toast.warning("Error");
-  }
+const deleteProducts = (productId: number) => {
+  deleteMedia(productId);
+  dialog.value = false;
 };
-
-onMounted(async () => {
-  try {
-    const response = await axios.get("http://34.136.49.137:4000/api/media/all");
-    media.value = response.data;
-  } catch (error) {
-    console.error(error);
-  }
-});
 </script>

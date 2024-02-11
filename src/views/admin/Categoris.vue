@@ -33,29 +33,50 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(categorie, i) in categories" :key="i">
+        <tr
+          v-for="(categorie, i) in category"
+          :key="i"
+          @click="singil(categorie.id)"
+        >
           <td class="text-left">{{ categorie.id }}</td>
           <td class="text-left">{{ categorie.name }}</td>
           <td class="text-left">{{ categorie.description }}</td>
-          <!-- <td class="text-left">{{ categorie.image }}</td> -->
           <td class="text-left">
-            <img
-              style="width: 200px; height: 200px"
-              :src="categorie.image"
-              alt="Rasm"
-            />
+            {{ categorie.image }}
           </td>
           <td class="text-left">{{ categorie.createdAt }}</td>
           <td class="text-left">{{ categorie.updatedAt }}</td>
-          <td class="flex">
-            <v-icon
-              @click="openProductModal(categorie.id)"
-              class="my-2 mx-4"
-              :icon="'mdi-pencil'"
-            >
-            </v-icon>
-            <v-icon @click="deleteProduct(categorie.id)" :icon="'mdi-delete'">
-            </v-icon>
+          <td>
+            <v-row justify="center">
+              <v-dialog v-model="dialog" persistent width="auto">
+                <template v-slot:activator="{ props }">
+                  <v-icon class="my-2" v-bind="props" :icon="'mdi-delete'">
+                  </v-icon>
+                </template>
+                <v-card>
+                  <v-card-title class="text-h5">
+                    Delete Products?
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="dialog = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="deleteProduct(categorie.id)"
+                    >
+                      Delete
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-row>
           </td>
         </tr>
       </tbody>
@@ -65,61 +86,27 @@
 
 <script setup lang="ts">
 import productModal from "@/views/admin/modals/categoriesModal.vue";
-import { useToast } from "vue-toastification";
-const toast = useToast();
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import router from "@/router";
+import { useAdminStore } from "@/store/admin";
+const dialog = ref(false);
 
-interface Categories {
-  id: number;
-  name: string;
-  image: string;
-  description: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+const { deleteCategory } = useAdminStore();
+import { useAdmin } from "@/composables/admin";
 
-const categories = ref<Categories[]>([]);
+const { category } = useAdmin();
 
-// const dialog = ref(false);
-// const productId = ref<number | null>(null);
-
-const openProductModal = (id: number) => {
-  // categories.value = id;
-  // dialog.value = true;
+const singil = (categoryId: number) => {
+  router.push({
+    path: "/singilcategory",
+    query: { id: categoryId },
+  });
 };
 
-const deleteProduct = async (productId: number) => {
-  try {
-    const accessToken = localStorage.getItem("token");
-    if (!accessToken) {
-      window.location.href = "/login";
-      return;
-    }
-    const response = await axios.delete(
-      `http://34.136.49.137:4000/api/category/${productId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    toast.success("Delete Categories");
-  } catch (error) {
-    toast.warning("Error");
-  }
+const deleteProduct = async (id: number) => {
+  deleteCategory(id);
+  dialog.value = false;
 };
-
-onMounted(async () => {
-  try {
-    const response = await axios.get(
-      "http://34.136.49.137:4000/api/category/all"
-    );
-    categories.value = response.data;
-  } catch (error) {
-    console.error(error);
-  }
-});
 </script>

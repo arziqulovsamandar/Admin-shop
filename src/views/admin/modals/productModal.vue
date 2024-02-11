@@ -57,7 +57,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useAdmin } from "@/composables/admin";
+
+import { useAdminStore } from "@/store/admin";
+const { createProduct } = useAdminStore();
 
 const { t } = useI18n();
 const dialog = ref(false);
@@ -74,9 +76,8 @@ const brand = ref("");
 const rating = ref("");
 const unit_of_measure = ref("");
 
-const { createProduct } = useAdmin();
 const saveProduct = async () => {
-  const produc = {
+  const products = {
     name: name.value,
     description: description.value,
     price: price.value,
@@ -89,7 +90,7 @@ const saveProduct = async () => {
     rating: parseInt(rating.value),
     unit_of_measure: unit_of_measure.value,
   };
-  await createProduct(produc);
+  await createProduct(products);
   dialog.value = false;
 };
 </script>

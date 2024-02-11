@@ -29,9 +29,6 @@
           <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="updateProduct">
-            Update
-          </v-btn>
           <v-btn color="blue-darken-1" variant="text" @click="saveProduct">
             Create
           </v-btn>
@@ -43,9 +40,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useToast } from "vue-toastification";
-import axios from "axios";
-const toast = useToast();
+
+import { useAdminStore } from "@/store/admin";
+const { createStore } = useAdminStore();
 
 const { t } = useI18n();
 
@@ -55,43 +52,14 @@ const addCount = ref("");
 const product_id = ref("");
 
 const saveProduct = async (productId: number) => {
-  try {
+  
     const produc = {
       addCount: parseInt(addCount.value),
       product_id: parseInt(product_id.value),
     };
-    const response = await axios.post(
-      "http://34.136.49.137:4000/api/store/create",
-      produc
-    );
+    await createStore(produc);
     dialog.value = false;
-    toast.success("Create Discount");
-  } catch (error) {
-    toast.warning("Error");
-    console.log(error);
-  }
 };
 
-const updateProduct = async () => {
-  try {
-    const formData = {
-      media_link: parseInt(addCount.value),
-      product_id: parseInt(product_id.value),
-    };
-    const response = await axios.post(
-      `http://34.136.49.137:4000/api/store/${productId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    dialog.value = false;
-    toast.success("Create Product");
-  } catch (error) {
-    toast.warning("Error");
-    console.log(error);
-  }
-};
+
 </script>

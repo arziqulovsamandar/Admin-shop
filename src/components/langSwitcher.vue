@@ -2,14 +2,17 @@
   <div class="langswitcher">
     <v-menu open-on-hover>
       <template v-slot:activator="{ props }">
-        <div>
-          <select @change="onLangChange($event)">
-            <option v-for="(item, i) in langs" :key="i" :value="item.locale">
-              {{ item.text }}
-            </option>
-          </select>
-        </div>
+        <span id="lang" class="langs" v-bind="props">{{ currentLang }}</span>
       </template>
+      <v-list>
+        <v-list-item
+          v-for="(item, i) in langs"
+          :key="i"
+          @click="onLangChange(item)"
+        >
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
     </v-menu>
   </div>
 </template>
@@ -44,15 +47,13 @@ const langs = ref<langObj[]>([
   },
 ]);
 
-function onLangChange(event: Event) {
-  const target = event.target as HTMLSelectElement;
-  const lang = target.value;
+function onLangChange(lang:langObj) {
   showList.value = false;
-  locale.value = lang;
-  localStorage.setItem("lang", lang);
+  locale.value = lang.locale;
+  localStorage.setItem("lang", lang.locale);
   const langElement = document.getElementById("lang");
   if (langElement) {
-    langElement.textContent = lang;
+    langElement.textContent = lang.locale;
   } else {
     console.error("Element with id 'lang' not found.");
   }

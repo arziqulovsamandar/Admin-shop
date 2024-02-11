@@ -34,18 +34,18 @@
       </thead>
       <tbody>
         <tr
-          v-for="(product, i) in products"
+          v-for="(products, i) in product"
           :key="i"
-          @click="singil(product.id)"
+          @click="singil(products.id)"
         >
-          <td class="text-left">{{ product.id }}</td>
-          <td class="text-left">{{ product.name }}</td>
-          <td class="text-left">{{ product.price }}</td>
-          <td class="text-left">{{ product.total_count }}</td>
-          <td class="text-left">{{ product.mfg }}</td>
-          <td class="text-left">{{ product.life }}</td>
-          <td class="text-left">{{ product.value }}</td>
-          <td class="text-left">{{ product.brand }}</td>
+          <td class="text-left">{{ products.id }}</td>
+          <td class="text-left">{{ products.name }}</td>
+          <td class="text-left">{{ products.price }}</td>
+          <td class="text-left">{{ products.total_count }}</td>
+          <td class="text-left">{{ products.mfg }}</td>
+          <td class="text-left">{{ products.life }}</td>
+          <td class="text-left">{{ products.value }}</td>
+          <td class="text-left">{{ products.brand }}</td>
           <td>
             <v-row justify="center">
               <v-dialog v-model="dialog" persistent width="auto">
@@ -87,13 +87,14 @@
 <script setup lang="ts">
 import productModal from "../admin/modals/productModal.vue";
 import { useI18n } from "vue-i18n";
-const { t } = useI18n();
 import { ref } from "vue";
 import router from "@/router";
+import { useAdminStore } from "@/store/admin";
 import { useAdmin } from "@/composables/admin";
-const { products } = useAdmin();
 
-const { deleteProduct } = useAdmin();
+const { t } = useI18n();
+const { deleteProduct } = useAdminStore();
+const { product } = useAdmin();
 
 const dialog = ref(false);
 
@@ -105,7 +106,6 @@ const singil = (productId: number) => {
 };
 
 const deleteProducts = (productId: number) => {
-  console.log(productId);
   deleteProduct(productId);
   dialog.value = false;
 };

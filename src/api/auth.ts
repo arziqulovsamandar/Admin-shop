@@ -1,7 +1,7 @@
 import axiosClient from "./apiClient";
 
 const authApi = {
-  login(payload) {
+  login(payload:any) {
     const url = "/admin/signin";
     return axiosClient.post(url, payload);
   }
