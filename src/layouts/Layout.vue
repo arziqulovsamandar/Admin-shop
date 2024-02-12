@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TheHeader class="header"/>
+    <TheHeader class="header" />
     <div class="home1">
       <TheSidebar />
       <router-view></router-view>

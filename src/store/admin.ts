@@ -30,6 +30,7 @@ import {
   apiupdateCuponCode,
   apifetchCuponCodetAll,
   apifetchSingleCuponCode,
+  apifetchUsertAll,
 } from "@/api/admin";
 
 import { useToast } from "vue-toastification";
@@ -47,6 +48,7 @@ export const useAdminStore = defineStore("product", {
     singilDiscount: {},
     media: [],
     singilMedia: {},
+    users: [],
 
     store: [],
     singilStore: {},
@@ -61,6 +63,21 @@ export const useAdminStore = defineStore("product", {
           return;
         }
         this.product = res.data;
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.warning(error.message);
+          return;
+        }
+      }
+    },
+
+    async getUsers() {
+      try {
+        const res = await apifetchUsertAll();
+        if (!res.data?.admins && res.status !== 200) {
+          return;
+        }
+        this.users = res.data;
       } catch (error) {
         if (error instanceof Error) {
           toast.warning(error.message);
@@ -366,9 +383,6 @@ export const useAdminStore = defineStore("product", {
       }
     },
 
-
-
-
     async getStore() {
       try {
         const res = await apifetchStoretAll();
@@ -434,7 +448,7 @@ export const useAdminStore = defineStore("product", {
     async getSingleStore(id: any) {
       try {
         const token = localStorage.getItem("token");
-        const res = await apifetchSingleStore(id,token);
+        const res = await apifetchSingleStore(id, token);
 
         if (!res.data && res.status !== 200) {
           return;
@@ -447,15 +461,6 @@ export const useAdminStore = defineStore("product", {
         }
       }
     },
-
-
-
-
-
-
-
-
-
 
     async getCupon_code() {
       try {

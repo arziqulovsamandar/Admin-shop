@@ -1,5 +1,4 @@
 import api from "@/plugins/axois";
-const url = import.meta.env.VITE_BASE_URL;
 
 function apifetchProductAll() {
   return api.get("/product/all");
@@ -23,6 +22,10 @@ function apifetchMediatAll() {
 
 function apifetchStoretAll() {
   return api.get("/store/all");
+}
+
+function apifetchUsertAll() {
+  return api.get("/user/all");
 }
 
 function apifetchCuponCodetAll() {
@@ -196,4 +199,5 @@ export {
   apiupdateCuponCode,
   apifetchCuponCodetAll,
   apifetchSingleCuponCode,
+  apifetchUsertAll
 };

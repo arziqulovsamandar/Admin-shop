@@ -47,7 +47,7 @@ const langs = ref<langObj[]>([
   },
 ]);
 
-function onLangChange(lang:langObj) {
+function onLangChange(lang: langObj) {
   showList.value = false;
   locale.value = lang.locale;
   localStorage.setItem("lang", lang.locale);

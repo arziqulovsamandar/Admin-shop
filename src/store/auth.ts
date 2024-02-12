@@ -18,7 +18,7 @@ export const useAuthStore = defineStore({
           await router.push({ name: "Admin" });
         }
       } catch (err) {
-        toast.warning("Error")
+        toast.warning("Error");
       }
     },
   },

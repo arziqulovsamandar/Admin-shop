@@ -21,6 +21,7 @@ export const useAdmin = () => {
     singilStore,
     cupon_code,
     singilcupon_code,
+    users,
   } = storeToRefs(storee);
   const {
     getProducts,
@@ -30,6 +31,7 @@ export const useAdmin = () => {
     getMedia,
     getCupon_code,
     getStore,
+    getUsers,
   } = useAdminStore();
 
   onMounted(async () => {
@@ -46,6 +48,8 @@ export const useAdmin = () => {
     await getCupon_code();
 
     await getStore();
+
+    await getUsers();
   });
 
   return {
@@ -64,5 +68,6 @@ export const useAdmin = () => {
     singilStore,
     cupon_code,
     singilcupon_code,
+    users,
   };
 };
