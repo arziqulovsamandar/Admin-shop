@@ -7,6 +7,15 @@ export interface discountData {
   createdAt: Date;
   updatedAt: Date;
 }
+export interface singildiscountData {
+  id: number;
+  name: string;
+  persentage: number;
+  start_date: Date;
+  end_date: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
 export interface categoriesData {
   id: number;
   name: string;

@@ -48,6 +48,7 @@ import {
   customerData,
   cuponCodeData,
   singilcuponCodeData,
+  singildiscountData,
 } from "@/modules/interface";
 const toast = useToast();
 
@@ -61,7 +62,7 @@ export const useAdminStore = defineStore("product", {
     singleCategory: {} as categoriesData,
     order: [] as OrdetData[],
     discount: [] as discountData[],
-    singilDiscount: {} as discountData,
+    singilDiscount: {} as singildiscountData,
     media: [] as MediaData[],
     singilMedia: {} as singilMediaData,
     users: [] as customerData[],
@@ -309,11 +310,11 @@ export const useAdminStore = defineStore("product", {
       this.loading = true;
       try {
         const res = await apifetchDiscountAll();
-        if (!res.data?.discount && res.status !== 200) {
+        if (!res.data?.admins && res.status !== 200) {
           return;
         }
         this.loading = false;
-        this.discount = res.data?.discount;
+        this.discount = res.data;
       } catch (error) {
         if (error instanceof Error) {
           toast.warning(error.message);

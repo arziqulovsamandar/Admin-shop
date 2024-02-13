@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading"><Loading /></div>
-  <div v-else style="overflow-x: scroll; overflow-y: hidden">
+  <div v-else>
     <div style="display: flex; justify-content: space-between">
       <div>
         <h1 style="margin: 5px">{{ t("admin.store") }}</h1>
