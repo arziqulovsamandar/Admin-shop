@@ -11,7 +11,7 @@
     <!-- <v-btn icon>
       <v-icon>mdi-account-circle</v-icon>
     </v-btn> -->
-    <div class="d-flex justify-space-around">
+    <div class="d-flex justify-space-around mx-4">
       <v-menu>
         <template v-slot:activator="{ props }">
           <v-btn color="primary" v-bind="props"> Acount </v-btn>
