@@ -15,8 +15,8 @@ export const useAuthStore = defineStore({
         this.loading = true;
         let res = await authApi.login(payload);
         this.loading = false;
-        if (res?.data?.tokens?.access_token) {
-          localStorage.setItem("token", res?.data?.tokens?.access_token);
+        if (res?.tokens?.access_token) {
+          localStorage.setItem("token", res?.tokens?.access_token);
           toast.success("Login");
           await router.push({ name: "Admin" });
         }
