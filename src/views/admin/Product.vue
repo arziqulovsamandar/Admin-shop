@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading"><Loading /></div>
-  <div v-else style="overflow-x: scroll; overflow-y: hidden">
+  <div v-else>
     <div>
       <div style="display: flex; justify-content: space-between">
         <div>
