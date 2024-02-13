@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div v-if="loading"><Loading /></div>
+  <div v-else>
     <div style="display: flex; justify-content: space-between">
-      <h2 style="margin: 10px">Media</h2>
-      <a href="/media" class="button">Home</a>
+      <h2 style="margin: 10px">Singil Media</h2>
     </div>
     <v-row
       justify="center"
@@ -53,7 +53,14 @@
       </v-dialog>
     </v-row>
     <div class="tables">
-      <h1>{{ singilMedia.media_link }}</h1>
+      <!-- <h1>{{ singilMedia.media_link }}</h1> -->
+      <td class="text-left">
+        <img
+          style="width: 200px; height: 200px"
+          :src="singilMedia.media_link"
+          alt="Rasm"
+        />
+      </td>
       <p>Persentage: {{ singilMedia.product_id }}</p>
       <p>Created at: {{ singilMedia.createdAt }}</p>
       <p>Updated at: {{ singilMedia.updatedAt }}</p>
@@ -61,6 +68,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import Loading from "@/components/loading.vue";
 import { ref } from "vue";
 import { useAdmin } from "@/composables/admin";
 import { onMounted } from "vue";
@@ -68,7 +76,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const dialog = ref(false);
 const id = route.query.id;
-const { singilMedia } = useAdmin() as { singilMedia: Ref<any[]> };
+const { singilMedia, loading } = useAdmin();
 
 const media_link = ref("");
 const product_id = ref("");

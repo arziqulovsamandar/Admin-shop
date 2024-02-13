@@ -1,5 +1,6 @@
 <template>
-  <div style="overflow-x: scroll; overflow-y: hidden">
+  <div v-if="loading"><Loading /></div>
+  <div v-else style="overflow-x: scroll; overflow-y: hidden">
     <div style="display: flex; justify-content: space-between">
       <div>
         <h1 style="margin: 5px">{{ t("admin.order") }}</h1>
@@ -41,7 +42,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-
+import Loading from "@/components/loading.vue";
 import { useAdmin } from "@/composables/admin";
-const { order } = useAdmin();
+const { order, loading } = useAdmin();
 </script>

@@ -8,6 +8,7 @@
     "media": "Media",
     "store": "Store",
     "cupon_code": "Cupon code",
-    "customer": "Customer"
+    "customer": "Customer",
+    "logout": "Log out"
   }
 }

@@ -13,7 +13,6 @@ import CuponCodeVue from "@/views/admin/CuponCode.vue";
 
 import Login from "@/views/Login.vue";
 import i18n from "../plugins/i18n";
-import Socket from "@/views/Socket.vue";
 import nProgress from "nprogress";
 
 import {
@@ -81,6 +80,18 @@ const router = createRouter({
       ],
     },
     {
+      path: "/singilproduct",
+      component: AdminLayout,
+      children: [
+        {
+          path: "/singilproduct",
+          component: () =>
+            import("@/views/admin/SingilPages/productSingil.vue"),
+          name: "SingilProduc",
+        },
+      ],
+    },
+    {
       path: "/discount",
       component: AdminLayout,
       children: [{ path: "/discount", component: BlogVue, name: RT_BLOG }],
@@ -91,34 +102,62 @@ const router = createRouter({
       component: () => import("@/views/NotFound.vue"),
     },
     {
-      path: "/singilproduct",
-      name: "SingilProduc",
-      component: () => import("@/views/admin/SingilPages/productSingil.vue"),
-    },
-    {
       path: "/singilcategory",
-      name: "SingilCategory",
-      component: () => import("@/views/admin/SingilPages/categorySingil.vue"),
+      component: AdminLayout,
+      children: [
+        {
+          path: "/singilcategory",
+          component: () =>
+            import("@/views/admin/SingilPages/categorySingil.vue"),
+          name: "SingilCategory",
+        },
+      ],
     },
     {
       path: "/singildicsount",
-      name: "SingilDiscount",
-      component: () => import("@/views/admin/SingilPages/discountSingil.vue"),
+      component: AdminLayout,
+      children: [
+        {
+          path: "/singildicsount",
+          component: () =>
+            import("@/views/admin/SingilPages/discountSingil.vue"),
+          name: "SingilDiscount",
+        },
+      ],
     },
     {
       path: "/singilmedia",
-      name: "SingilDiscount",
-      component: () => import("@/views/admin/SingilPages/mediaSingil.vue"),
+      component: AdminLayout,
+      children: [
+        {
+          path: "/singilmedia",
+          component: () => import("@/views/admin/SingilPages/mediaSingil.vue"),
+          name: "SingilMedia",
+        },
+      ],
     },
     {
       path: "/singilstore",
-      name: "SingilStore",
-      component: () => import("@/views/admin/SingilPages/storeSingil.vue"),
+      component: AdminLayout,
+      children: [
+        {
+          path: "/singilstore",
+          component: () => import("@/views/admin/SingilPages/storeSingil.vue"),
+          name: "SingilStore",
+        },
+      ],
     },
     {
       path: "/singilcupon_code",
-      name: "SingilCuponCode",
-      component: () => import("@/views/admin/SingilPages/cuponCodeSingil.vue"),
+      component: AdminLayout,
+      children: [
+        {
+          path: "/singilcupon_code",
+          component: () =>
+            import("@/views/admin/SingilPages/cuponCodeSingil.vue"),
+          name: "SingilCuponCode",
+        },
+      ],
     },
     {
       path: "/",

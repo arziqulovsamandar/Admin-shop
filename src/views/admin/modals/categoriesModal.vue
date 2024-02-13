@@ -45,9 +45,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useToast } from "vue-toastification";
-import axios from "axios";
-const toast = useToast();
+import { useAdminStore } from "@/store/admin";
+const { createCategory } = useAdminStore();
 
 const { t } = useI18n();
 
@@ -57,56 +56,17 @@ const name = ref("");
 const description = ref("");
 const image = ref("");
 
-const handleFileChange = (event) => {
+const handleFileChange = (event: any) => {
   const file = event.target.files[0];
   image.value = file;
 };
 
 const saveProduct = async () => {
-  try {
-    const formData = new FormData();
-    formData.append("name", name.value);
-    formData.append("description", description.value);
-    formData.append("image", image.value);
-
-    const response = await axios.post(
-      "http://34.136.49.137:4000/api/category/create",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    dialog.value = false;
-    toast.success("Create Categories");
-  } catch (error) {
-    toast.warning("Error");
-    console.log(error);
-  }
-};
-
-const updateProduct = async () => {
-  try {
-    const formData = new FormData();
-    formData.append("name", name.value);
-    formData.append("description", description.value);
-    formData.append("image", image.value);
-
-    const response = await axios.post(
-      `http://34.136.49.137:4000/api/category/${productId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    dialog.value = false;
-    toast.success("Create Product");
-  } catch (error) {
-    toast.warning("Error");
-    console.log(error);
-  }
+  const formData = new FormData();
+  formData.append("name", name.value);
+  formData.append("description", description.value);
+  formData.append("image", image.value);
+  await createCategory(formData);
+  dialog.value = false;
 };
 </script>

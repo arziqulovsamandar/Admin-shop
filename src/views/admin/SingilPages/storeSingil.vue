@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div v-if="loading"><Loading /></div>
+  <div v-else>
     <div style="display: flex; justify-content: space-between">
-      <h2 style="margin: 10px">Store</h2>
-      <a href="/store" class="button">Home</a>
+      <h2 style="margin: 10px">Singil Store</h2>
     </div>
     <v-row
       justify="center"
@@ -63,18 +63,19 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAdmin } from "@/composables/admin";
+import Loading from "@/components/loading.vue";
 import { onMounted } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const dialog = ref(false);
 const id = route.query.id;
-const { singilStore } = useAdmin() as { singilStore: Ref<any[]> };
+const { singilStore } = useAdmin();
 
 const addCount = ref("");
 const product_id = ref("");
 
 import { useAdminStore } from "@/store/admin";
-const { getSingleStore, updateStore } = useAdminStore();
+const { getSingleStore, updateStore, loading } = useAdminStore();
 
 onMounted(async () => {
   await getSingleStore(id);

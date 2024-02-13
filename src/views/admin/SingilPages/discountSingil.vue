@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div v-if="loading"><Loading /></div>
+  <div v-else>
     <div style="display: flex; justify-content: space-between">
-      <h2 style="margin: 10px">Discount</h2>
-      <a href="/discount" class="button">Home</a>
+      <h2 style="margin: 10px">Singil Discount</h2>
     </div>
     <v-row
       justify="center"
@@ -71,6 +71,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import Loading from "@/components/loading.vue";
 import { ref } from "vue";
 import { useAdmin } from "@/composables/admin";
 import { onMounted } from "vue";
@@ -78,7 +79,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const dialog = ref(false);
 const id = route.query.id;
-const { singilDiscount } = useAdmin() as { singilDiscount: Ref<any[]> };
+const { singilDiscount, loading } = useAdmin();
 
 const name = ref("");
 const persentage = ref("");

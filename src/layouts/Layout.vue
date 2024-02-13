@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <TheHeader class="header" />
     <div class="home1">
@@ -6,11 +6,28 @@
       <router-view></router-view>
     </div>
   </div>
-</template>
+</template> -->
+<template>
+  <v-layout class="!h-screen">
+    <sidebar :permanent="permanent" />
 
+    <appbar @toggle-sidebar="toggleSidebar" />
+
+    <v-main class="overflow-y-scroll">
+      <v-container>
+        <slot />
+      </v-container>
+    </v-main>
+  </v-layout>
+</template>
 <script setup lang="ts">
-import TheHeader from "@/components/theHeader.vue";
-import TheSidebar from "@/components/theSidebar.vue";
+import Appbar from "@/components/theHeader.vue";
+import Sidebar from "@/components/theSidebar.vue";
+import { ref } from "vue";
+const toggleSidebar = () => {
+  permanent.value = !permanent.value;
+};
+const permanent = ref(true);
 </script>
 
 <style scoped>

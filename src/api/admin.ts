@@ -153,6 +153,14 @@ function apicreateMedia(produc: any) {
   return api.post(`/media/create`, produc);
 }
 
+function apicreateCategory(formData: any) {
+  return api.post(`/category/create`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+}
+
 function apiupdatediscount(id: any, produc: any, token: any) {
   return api.put(`/discount/${id}`, produc, {
     headers: {
@@ -199,5 +207,6 @@ export {
   apiupdateCuponCode,
   apifetchCuponCodetAll,
   apifetchSingleCuponCode,
-  apifetchUsertAll
+  apifetchUsertAll,
+  apicreateCategory,
 };

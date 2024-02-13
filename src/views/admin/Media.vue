@@ -1,5 +1,6 @@
 <template>
-  <div style="overflow-x: scroll; overflow-y: hidden">
+  <div v-if="loading"><Loading /></div>
+  <div v-else style="overflow-x: scroll; overflow-y: hidden">
     <div style="display: flex; justify-content: space-between">
       <div>
         <h1 style="margin: 5px">{{ t("admin.media") }}</h1>
@@ -18,6 +19,7 @@
         />
       </div>
     </div>
+
     <v-table class="my-2" style="overflow-x: auto">
       <thead style="background-color: #f2eae1">
         <tr>
@@ -82,10 +84,22 @@
 
 <script setup lang="ts">
 import productModal from "../admin/modals/mediaModal.vue";
-
+import Loading from "@/components/loading.vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-import { ref } from "vue";
+import { ref, computed, reactive } from "vue";
+
+// const paginatedMedia = computed(() => {
+//   const start = (params.page - 1) * params.limit;
+//   const end = start + params.limit;
+//   return Array.isArray(media) ? media.slice(start, end) : [];
+// });
+
+// const params = reactive({
+//   page: 1,
+//   limit: 10,
+//   last_page: null,
+// });
 
 const dialog = ref(false);
 
@@ -94,7 +108,7 @@ import { useAdminStore } from "@/store/admin";
 import { useAdmin } from "@/composables/admin";
 
 const { deleteMedia } = useAdminStore();
-const { media } = useAdmin();
+const { media, loading } = useAdmin();
 
 const singil = (productId: number) => {
   router.push({

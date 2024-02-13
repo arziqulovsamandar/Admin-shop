@@ -2,7 +2,6 @@ import { useAdminStore } from "@/store/admin";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
 export const useAdmin = () => {
   const storee = useAdminStore();
   const router = useRouter();
@@ -22,6 +21,7 @@ export const useAdmin = () => {
     cupon_code,
     singilcupon_code,
     users,
+    loading,
   } = storeToRefs(storee);
   const {
     getProducts,
@@ -69,5 +69,6 @@ export const useAdmin = () => {
     cupon_code,
     singilcupon_code,
     users,
+    loading,
   };
 };

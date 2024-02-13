@@ -7,13 +7,16 @@ export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
     user: null,
+    loading: false,
   }),
   actions: {
-    async authLogin(payload) {
+    async authLogin(payload: any) {
       try {
+        this.loading = true;
         let res = await authApi.login(payload);
-        if (res?.tokens?.access_token) {
-          localStorage.setItem("token", res?.tokens?.access_token);
+        this.loading = false;
+        if (res?.data?.tokens?.access_token) {
+          localStorage.setItem("token", res?.data?.tokens?.access_token);
           toast.success("Login");
           await router.push({ name: "Admin" });
         }

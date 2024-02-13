@@ -1,5 +1,6 @@
 <template>
-  <div style="overflow-x: scroll; overflow-y: hidden">
+  <div v-if="loading"><Loading /></div>
+  <div v-else style="overflow-x: scroll; overflow-y: hidden">
     <div style="display: flex; justify-content: space-between">
       <div>
         <h1 style="margin: 5px">{{ t("admin.categories") }}</h1>
@@ -86,6 +87,7 @@
 
 <script setup lang="ts">
 import productModal from "@/views/admin/modals/categoriesModal.vue";
+import Loading from "@/components/loading.vue";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -96,7 +98,7 @@ const dialog = ref(false);
 const { deleteCategory } = useAdminStore();
 import { useAdmin } from "@/composables/admin";
 
-const { category } = useAdmin();
+const { category, loading } = useAdmin();
 
 const singil = (categoryId: number) => {
   router.push({

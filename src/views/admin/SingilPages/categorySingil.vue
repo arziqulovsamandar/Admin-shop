@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div v-if="loading"><Loading /></div>
+  <div v-else>
     <div style="display: flex; justify-content: space-between">
-      <h2 style="margin: 10px">Category</h2>
-      <a href="/categories" class="button">Home</a>
+      <h2 style="margin: 10px">Singl Category</h2>
     </div>
     <v-row
       justify="center"
@@ -67,6 +67,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import Loading from "@/components/loading.vue";
 import { ref } from "vue";
 import { useAdmin } from "@/composables/admin";
 import { onMounted } from "vue";
@@ -74,7 +75,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const dialog = ref(false);
 const id = route.query.id;
-const { singleCategory } = useAdmin() as { singleCategory: Ref<any[]> };
+const { singleCategory, loading } = useAdmin();
 
 const name = ref("");
 const description = ref("");
@@ -86,6 +87,11 @@ const { getSingleCategory, updateCategory } = useAdminStore();
 onMounted(async () => {
   await getSingleCategory(id);
 });
+
+const handleFileChange = (event: any) => {
+  const file = event.target.files[0];
+  image.value = file;
+};
 
 const updateProducts = async () => {
   const produc = {

@@ -52,14 +52,11 @@ const addCount = ref("");
 const product_id = ref("");
 
 const saveProduct = async (productId: number) => {
-  
-    const produc = {
-      addCount: parseInt(addCount.value),
-      product_id: parseInt(product_id.value),
-    };
-    await createStore(produc);
-    dialog.value = false;
+  const produc = {
+    addCount: parseInt(addCount.value),
+    product_id: parseInt(product_id.value),
+  };
+  await createStore(produc);
+  dialog.value = false;
 };
-
-
 </script>

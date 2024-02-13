@@ -1,5 +1,6 @@
 <template>
-  <div style="overflow-x: scroll; overflow-y: hidden">
+  <div v-if="loading"><Loading /></div>
+  <div v-else>
     <div style="display: flex; justify-content: space-between">
       <div>
         <h1 style="margin: 5px">{{ t("admin.discount") }}</h1>
@@ -84,17 +85,16 @@
 
 <script setup lang="ts">
 import productModal from "../admin/modals/discountModal.vue";
-
+import Loading from "@/components/loading.vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-import { ref, onMounted } from "vue";
-
+import { ref } from "vue";
 import router from "@/router";
 import { useAdminStore } from "@/store/admin";
 import { useAdmin } from "@/composables/admin";
 
 const { deleteDiscount } = useAdminStore();
-const { discount } = useAdmin();
+const { discount, loading } = useAdmin();
 
 const dialog = ref(false);
 
@@ -109,4 +109,10 @@ const deleteProducts = (productId: number) => {
   deleteDiscount(productId);
   dialog.value = false;
 };
+interface Product {
+  id: number;
+}
+const product = ref<Product>({
+  id: 0,
+});
 </script>

@@ -8,6 +8,7 @@
     "media": "СМИ",
     "store": "Магазин",
     "cupon_code": "Код купона",
-    "customer": "Клиент"
+    "customer": "Клиент",
+    "logout": "Выход"
   }
 }
